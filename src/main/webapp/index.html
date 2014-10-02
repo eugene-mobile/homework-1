@@ -5,6 +5,38 @@
 <title>Insert title here</title>
 </head>
 <body>
-	Hello world!
+	<h3>Hello world!</h3>
+	<div ng-app="homeworkApp" ng-controller="HomeworkController">
+		<form name="myForm">
+			<input type="text" name="input" ng-model="inputText">
+			<a ng-click="getText(inputText)" href="#">Done</a>
+			<br/>
+			Returned value: <span ng-bind="returnedText"></span><br/>
+		</form>
+	</div>
+
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+<script>
+	var app = angular.module('homeworkApp', []);
+
+	function HomeworkController($scope, $http) {
+
+	    $scope.inputText = '';		//Variable to store value of input field
+	    $scope.returnedText = 'test';	//Variable to keep returned values
+	    
+	    $scope.getText = function(value) {
+	    	var httpRequest = $http({
+	            method: 'POST',
+	            url: '/getText', 
+	            data: value
+	        }).success(function(data, status) {
+	        	$scope.returnedText = data;
+	        });
+	    }
+
+	}
+
+</script>
+
 </body>
 </html>
